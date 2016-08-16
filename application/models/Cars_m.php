@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Cars extends CI_Model {
+class Cars_m extends CI_Model {
 	var $table;
 
 	public function __construct() {
@@ -62,5 +62,5 @@ class Cars extends CI_Model {
 	}
 }
 
-/* End of file cars.php */
-/* Location: ./application/models/cars.php */
+/* End of file Cars_m.php */
+/* Location: ./application/models/Cars_m.php */

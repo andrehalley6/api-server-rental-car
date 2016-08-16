@@ -40,14 +40,14 @@ class Histories extends CI_Controller {
 		}
 
 		// Check current id on database
-		$client = $this->clients->get_client_by_id($id)->result_array();
+		$client = $this->clients_m->get_client_by_id($id)->result_array();
 		if(empty($client)) {
 			echo deliver_response(400, "fail", "The client ID must be exists on the database");
 			exit;
 		}
 
 		if($client) {
-			$rental_histories = $this->rentals->get_client_rental_histories($id)->result_array();
+			$rental_histories = $this->rentals_m->get_client_rental_histories($id)->result_array();
 			$client_data = $client[0];
 
 			foreach($rental_histories as $rental_history) {
@@ -81,14 +81,14 @@ class Histories extends CI_Controller {
 		}
 
 		// Check current id on database
-		$car = $this->cars->get_car_year_type_plate_by_id($id)->result_array();
+		$car = $this->cars_m->get_car_year_type_plate_by_id($id)->result_array();
 		if(empty($car)) {
 			echo deliver_response(400, "fail", "The car ID must be exists on the database");
 			exit;
 		}
 
 		if($car) {
-			$rental_histories = $this->rentals->get_car_rental_histories($id, $mm, $yyyy)->result_array();
+			$rental_histories = $this->rentals_m->get_car_rental_histories($id, $mm, $yyyy)->result_array();
 			$car_data = $car[0];
 
 			$i = 0;

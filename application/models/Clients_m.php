@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Clients extends CI_Model {
+class Clients_m extends CI_Model {
 	var $table;
 
 	public function __construct() {
@@ -45,5 +45,5 @@ class Clients extends CI_Model {
 	}
 }
 
-/* End of file clients.php */
-/* Location: ./application/models/clients.php */
+/* End of file Clients_m.php */
+/* Location: ./application/models/Clients_m.php */

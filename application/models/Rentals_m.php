@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Rentals extends CI_Model {
+class Rentals_m extends CI_Model {
 	var $table;
 
 	public function __construct() {
@@ -46,8 +46,9 @@ class Rentals extends CI_Model {
 		return $this->db->get($this->table);
 	}
 
-	public function get_rental_by_car_id_and_rent_date($car_id, $start_rent, $end_rent) {
+	public function get_rental_by_car_id_and_rent_date($car_id, $start_rent, $end_rent, $id) {
 		$this->db->where("car-id", $car_id);
+		$this->db->where("id <> ", $id);
 		$this->db->where(" (('" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' <= `date-from` AND '" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' >= `date-to`)) ");
 
 		return $this->db->get($this->table);
@@ -92,5 +93,5 @@ class Rentals extends CI_Model {
 	}
 }
 
-/* End of file rentals.php */
-/* Location: ./application/models/rentals.php */
+/* End of file Rentals_m.php */
+/* Location: ./application/models/Rentals_m.php */
