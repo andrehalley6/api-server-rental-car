@@ -17,6 +17,19 @@ class Rentals extends CI_Model {
 		return $this->db->get($this->table);
 	}
 
+	public function get_client_rental_histories($client_id) {
+		$this->db->select("`c`.`brand`, `c`.`type`, `c`.`plate`, `r`.`date-from`, `r`.`date-to`");
+		$this->db->from("`rentals` as `r`");
+		$this->db->join("`cars` as `c`", "`r`.`car-id` = `c`.`id`", "left");
+		$this->db->where("`r`.`client-id`", $client_id);
+
+		return $this->db->get();
+
+		// $query = $this->db->query("SELECT * FROM `rentals` as `r` LEFT JOIN `cars` as `c` ON `r`.`car-id` = `c`.`id` WHERE `r`.`client-id` = '$client_id'");
+
+		// return $query;
+	}
+
 	public function get_rental_by_client_id_and_rent_date($client_id, $car_id, $start_rent, $end_rent) {
 		$this->db->where("client-id", $client_id);
 		$this->db->where("car-id <> ", $car_id);
