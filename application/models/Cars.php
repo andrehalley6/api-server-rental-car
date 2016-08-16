@@ -17,6 +17,12 @@ class Cars extends CI_Model {
 		return $this->db->get($this->table);
 	}
 
+	public function get_car_year_type_plate_by_id($id) {
+		$this->db->select("id, year, type, plate");
+		$this->db->where("id", $id);
+		return $this->db->get($this->table);
+	}
+
 	public function get_car_by_plate($plate) {
 		$this->db->where("plate", $plate);
 		return $this->db->get($this->table);

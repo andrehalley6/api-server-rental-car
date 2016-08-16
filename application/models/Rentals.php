@@ -26,24 +26,36 @@ class Rentals extends CI_Model {
 		return $this->db->get();
 	}
 
+	public function get_car_rental_histories($car_id, $mm, $yyyy) {
+		$first_day =  date("$yyyy-$mm-01");
+		$last_day = date("$yyyy-$mm-t");
+		$this->db->select("`c`.`name`, `r`.`date-from`, `r`.`date-to`");
+		$this->db->from("`rentals` as `r`");
+		$this->db->join("`clients` as `c`", "`r`.`client-id` = `c`.`id`", "left");
+		$this->db->where("`r`.`car-id`", $car_id);
+		$this->db->where("`r`.`date-from` >= '" . date("$yyyy-$mm-01 00:00:00") . "' AND `r`.`date-to` <= '" . date("$yyyy-$mm-t 25:59:59") . "'");
+
+		return $this->db->get();
+	}
+
 	public function get_rental_by_client_id_and_rent_date($client_id, $car_id, $start_rent, $end_rent) {
 		$this->db->where("client-id", $client_id);
 		$this->db->where("car-id <> ", $car_id);
-		$this->db->where(" (('" . date("Y-m-d H:i:s", strtotime($start_rent)). "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' <= `date-from` AND '" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' >= `date-to`)) ");
+		$this->db->where(" (('" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' <= `date-from` AND '" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' >= `date-to`)) ");
 
 		return $this->db->get($this->table);
 	}
 
 	public function get_rental_by_car_id_and_rent_date($car_id, $start_rent, $end_rent) {
 		$this->db->where("car-id", $car_id);
-		$this->db->where(" (('" . date("Y-m-d H:i:s", strtotime($start_rent)). "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' <= `date-from` AND '" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' >= `date-to`)) ");
+		$this->db->where(" (('" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' <= `date-from` AND '" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' >= `date-to`)) ");
 
 		return $this->db->get($this->table);
 	}
 
 	public function check_current_car_rental($id, $start_rent, $end_rent) {
 		$this->db->where("id != " . $id);
-		$this->db->where(" (('" . date("Y-m-d H:i:s", strtotime($start_rent)). "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' <= `date-from` AND '" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' >= `date-to`)) ");
+		$this->db->where(" (('" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' <= `date-from` AND '" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' >= `date-to`)) ");
 
 		return $this->db->get($this->table);
 	}

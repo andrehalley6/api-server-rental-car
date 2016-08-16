@@ -35,14 +35,14 @@ class Histories extends CI_Controller {
 	public function client($id = NULL) {
 		// Check if id is exist
 		if(empty($id) || is_null($id)) {
-			echo deliver_response(400, "fail", "The ID must be exists");
+			echo deliver_response(400, "fail", "The client ID must be exists");
 			exit;
 		}
 
 		// Check current id on database
 		$client = $this->clients->get_client_by_id($id)->result_array();
 		if(empty($client)) {
-			echo deliver_response(400, "fail", "The ID must be exists on the database");
+			echo deliver_response(400, "fail", "The client ID must be exists on the database");
 			exit;
 		}
 
@@ -55,6 +55,51 @@ class Histories extends CI_Controller {
 			}
 
 			echo car_rental_response("data", $client_data);
+			exit;
+		}
+	}
+
+	public function car($id) {
+		// Check if id is exist
+		if(empty($id) || is_null($id)) {
+			echo deliver_response(400, "fail", "The car ID must be exists");
+			exit;
+		}
+
+		// Check if month parameter is exist
+		$month = isset($_GET['month']) ? $_GET['month'] : NULL;
+		if(is_null($month)) {
+			echo deliver_response(400, "fail", "Must be within specified month");
+			exit;
+		}
+
+		// Check month format
+		list($mm, $yyyy) = explode('-',$month);
+		if (!checkdate($mm, 1, $yyyy)) {
+		    echo deliver_response(400, "fail", "Month format must be `MM-YYYY`");
+		    exit;
+		}
+
+		// Check current id on database
+		$car = $this->cars->get_car_year_type_plate_by_id($id)->result_array();
+		if(empty($car)) {
+			echo deliver_response(400, "fail", "The car ID must be exists on the database");
+			exit;
+		}
+
+		if($car) {
+			$rental_histories = $this->rentals->get_car_rental_histories($id, $mm, $yyyy)->result_array();
+			$car_data = $car[0];
+
+			$i = 0;
+			foreach($rental_histories as $rental_history) {
+				$car_data['histories'][$i]['rent-by'] = $rental_history['name'];
+				$car_data['histories'][$i]['date-from'] = date("Y-m-d", strtotime($rental_history['date-from']));
+				$car_data['histories'][$i]['date-to'] = date("Y-m-d", strtotime($rental_history['date-to']));
+				$i++;
+			}
+
+			echo car_rental_response("data", $car_data);
 			exit;
 		}
 	}
