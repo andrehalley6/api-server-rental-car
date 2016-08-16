@@ -21,7 +21,6 @@ class Rentals extends CI_Model {
 		$this->db->where("client-id", $client_id);
 		$this->db->where("car-id <> ", $car_id);
 		$this->db->where(" (('" . date("Y-m-d H:i:s", strtotime($start_rent)). "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' <= `date-from` AND '" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' >= `date-to`)) ");
-		// $this->db->where(" (`date-from` >= '" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' AND `date-to` <= '" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' OR `date-from` >= '" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' AND `date-to` <= '" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' OR ('" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' <= `date-from` AND '" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' >= `date-to`)) ");
 
 		return $this->db->get($this->table);
 	}
@@ -29,7 +28,6 @@ class Rentals extends CI_Model {
 	public function get_rental_by_car_id_and_rent_date($car_id, $start_rent, $end_rent) {
 		$this->db->where("car-id", $car_id);
 		$this->db->where(" (('" . date("Y-m-d H:i:s", strtotime($start_rent)). "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' NOT BETWEEN `date-from` AND `date-to`) OR ('" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' <= `date-from` AND '" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' >= `date-to`)) ");
-		// $this->db->where(" (`date-from` >= '" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' AND `date-to` <= '" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' OR `date-from` >= '" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' AND `date-to` <= '" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' OR ('" . date("Y-m-d H:i:s", strtotime($start_rent)) . "' <= `date-from` AND '" . date("Y-m-d H:i:s", strtotime($end_rent)) . "' >= `date-to`)) ");
 
 		return $this->db->get($this->table);
 	}
