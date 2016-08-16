@@ -28,6 +28,14 @@ class Cars_m extends CI_Model {
 		return $this->db->get($this->table);
 	}
 
+	public function get_car_free_information($dd, $mm, $yyyy) {
+		$SQL = sprintf("SELECT `brand`, `type`, `plate` FROM `%s` WHERE `id` NOT IN (SELECT `car-id` FROM `rentals` WHERE ('%s' BETWEEN `date-from` AND `date-to`))", $this->table, date("$yyyy-$mm-$dd"));
+		// $query = $this->db->query("SELECT * FROM `" . $this->table . "` WHERE `id` NOT IN (SELECT `car-id` FROM `rentals` WHERE ('" . date("$yyyy-$mm-$dd") . "' BETWEEN `date-from` AND `date-to`))");
+		$query = $this->db->query($SQL);
+
+		return $query;
+	}
+
 	public function add_car() {
 		$data = array(
 			'brand'	=> $this->input->post('brand'),

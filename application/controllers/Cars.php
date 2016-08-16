@@ -146,7 +146,7 @@ class Cars extends CI_Controller {
 		// Check date format
 		list($dd, $mm, $yyyy) = explode('-',$date);
 		if (!checkdate($mm, $dd, $yyyy)) {
-		    echo deliver_response(400, "fail", "Month format must be `MM-YYYY`");
+		    echo deliver_response(400, "fail", "Month format must be `DD-MM-YYYY`");
 		    exit;
 		}
 
@@ -162,6 +162,37 @@ class Cars extends CI_Controller {
 		}
 
 		echo car_rental_response("data", $car_rented_data);
+		exit;
+	}
+
+	public function free() {
+		// Check if date parameter is exist
+		$date = isset($_GET['date']) ? $_GET['date'] : NULL;
+		if(is_null($date)) {
+			echo deliver_response(400, "fail", "Must be within specified date");
+			exit;
+		}
+		
+		// Check date format
+		list($dd, $mm, $yyyy) = explode('-',$date);
+		if (!checkdate($mm, $dd, $yyyy)) {
+		    echo deliver_response(400, "fail", "Month format must be `DD-MM-YYYY`");
+		    exit;
+		}
+
+		$car_free_informations = $this->cars_m->get_car_free_information($dd, $mm, $yyyy)->result_array();
+		// echo car_rental_response("data", $car_free_informations); die;
+		$car_free_data['date'] = $date;
+		
+		$i = 0;
+		foreach($car_free_informations as $information) {
+			$car_free_data['free_cars'][$i]['brand'] = $information['brand'];
+			$car_free_data['free_cars'][$i]['type'] = $information['type'];
+			$car_free_data['free_cars'][$i]['plate'] = $information['plate'];
+			$i++;
+		}
+
+		echo car_rental_response("data", $car_free_data);
 		exit;
 	}
 }
