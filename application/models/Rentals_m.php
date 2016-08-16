@@ -38,6 +38,15 @@ class Rentals_m extends CI_Model {
 		return $this->db->get();
 	}
 
+	public function get_car_rented_information($dd, $mm, $yyyy) {
+		$this->db->select("`c`.`brand`, `c`.`type`, `c`.`plate`");
+		$this->db->from("`rentals` as `r`");
+		$this->db->join("`cars` as `c`", "`r`.`car-id` = `c`.`id`", "left");
+		$this->db->where(" (('" . date("$yyyy-$mm-$dd") . "' BETWEEN `r`.`date-from` AND `r`.`date-to`) OR ('" . date("$yyyy-$mm-$dd") . "' BETWEEN `r`.`date-from` AND `r`.`date-to`)) ");
+
+		return $this->db->get();
+	}
+
 	public function get_rental_by_client_id_and_rent_date($client_id, $car_id, $start_rent, $end_rent) {
 		$this->db->where("client-id", $client_id);
 		$this->db->where("car-id <> ", $car_id);

@@ -134,4 +134,34 @@ class Cars extends CI_Controller {
 			exit;
 		}
 	}
+
+	public function rented() {
+		// Check if date parameter is exist
+		$date = isset($_GET['date']) ? $_GET['date'] : NULL;
+		if(is_null($date)) {
+			echo deliver_response(400, "fail", "Must be within specified date");
+			exit;
+		}
+		
+		// Check date format
+		list($dd, $mm, $yyyy) = explode('-',$date);
+		if (!checkdate($mm, $dd, $yyyy)) {
+		    echo deliver_response(400, "fail", "Month format must be `MM-YYYY`");
+		    exit;
+		}
+
+		$car_rented_informations = $this->rentals_m->get_car_rented_information($dd, $mm, $yyyy)->result_array();
+		$car_rented_data['date'] = $date;
+		
+		$i = 0;
+		foreach($car_rented_informations as $information) {
+			$car_rented_data['rented_cars'][$i]['brand'] = $information['brand'];
+			$car_rented_data['rented_cars'][$i]['type'] = $information['type'];
+			$car_rented_data['rented_cars'][$i]['plate'] = $information['plate'];
+			$i++;
+		}
+
+		echo car_rental_response("data", $car_rented_data);
+		exit;
+	}
 }
