@@ -24,10 +24,6 @@ class Rentals extends CI_Model {
 		$this->db->where("`r`.`client-id`", $client_id);
 
 		return $this->db->get();
-
-		// $query = $this->db->query("SELECT * FROM `rentals` as `r` LEFT JOIN `cars` as `c` ON `r`.`car-id` = `c`.`id` WHERE `r`.`client-id` = '$client_id'");
-
-		// return $query;
 	}
 
 	public function get_rental_by_client_id_and_rent_date($client_id, $car_id, $start_rent, $end_rent) {

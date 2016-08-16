@@ -58,12 +58,4 @@ class Histories extends CI_Controller {
 			exit;
 		}
 	}
-
-	public function car($id = NULL) {
-		
-	}
-
-	public function rentals($id = NULL) {
-		
-	}
 }
