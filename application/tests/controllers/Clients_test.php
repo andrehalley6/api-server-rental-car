@@ -14,7 +14,7 @@ class Clients_test extends TestCase {
         } catch (CIPHPUnitTestExitException $e) {
            $output = ob_get_clean();
         }
-        $this->assertContains("{\"id\":30}", $output);
+        $this->assertContains("{\"id\":1}", $output);
 
         // This is unit test for edit clients
         // try {
@@ -42,6 +42,6 @@ class Clients_test extends TestCase {
         // } catch (CIPHPUnitTestExitException $e) {
         //     $output = ob_get_clean();
         // }
-        // $this->assertContains("{"data":[{"id":"1","name":"Ahmad Nurwanto","gender":"male"},{"id":"2","name":"Ahmad","gender":"male"}]}", $output);
+        // $this->assertContains("{\"data\":[{\"id\":\"1\",\"name\":\"Ahmad Nurwanto\",\"gender\":\"male\"},{\"id\":\"2\",\"name\":\"Ahmad\",\"gender\":\"male\"}]}", $output);
     }
 }
