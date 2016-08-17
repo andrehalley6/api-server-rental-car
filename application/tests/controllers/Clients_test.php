@@ -7,17 +7,17 @@ class Clients_test extends TestCase {
 		
         // This is unit test for add clients
         try {
-           $output = $this->request('POST', 'clients', [
-           	'name' => 'Ahmad',
-           	'gender' => 'male'
-           ]);
+            $output = $this->request('POST', 'clients', [
+           	    'name' => 'Ahmad',
+           	    'gender' => 'male'
+            ]);
         } catch (CIPHPUnitTestExitException $e) {
            $output = ob_get_clean();
         }
         $this->assertContains("{\"id\":30}", $output);
 
         // This is unit test for edit clients
-        try {
+        // try {
         //     $output = $this->request('PUT', 'clients', json_encode([
         //         'id' => 1, 
         //         'name' => 'Andre', 
