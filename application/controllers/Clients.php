@@ -17,7 +17,7 @@ class Clients extends CI_Controller {
 		$this->request_method = $this->input->server('REQUEST_METHOD');
 
 		// Check header accept parameter
-		if($this->http_header['Accept'] != "application/json") {
+		if(isset($this->http_header['Accept']) && $this->http_header['Accept'] != "application/json") {
 			echo deliver_response(400, "fail", "Content Type Not Supported");
 			exit;
 		}

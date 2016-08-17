@@ -11,6 +11,18 @@ if(!function_exists("debug_var")) {
 	}
 }
 
+if (!function_exists('getallheaders')) { 
+    function getallheaders() { 
+		$headers = ''; 
+       	foreach ($_SERVER as $name => $value) { 
+           	if (substr($name, 0, 5) == 'HTTP_') { 
+            	$headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value; 
+           	} 
+       } 
+       return $headers; 
+    } 
+}
+
 if(!function_exists("array_to_xml")) {
 	// function defination to convert array to xml
 	function array_to_xml($array_param, &$xml) {
